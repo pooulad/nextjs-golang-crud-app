@@ -1,12 +1,13 @@
 package repository
 
-import "github.com/gofiber/fiber/v2"
-
+import (
+	"github.com/gofiber/fiber/v2"
+)
 
 func (repo *Repository) SetupRoutes(app *fiber.App) {
 	//routes.Setup(repo, app)
-	app.Static("/", "./client/public")
-
+	app.Static("/", "./frontend")
+	
 	api := app.Group("/api")
 	api.Get("/users", repo.GetUsers)
 	api.Post("/users", repo.CreateUser)
