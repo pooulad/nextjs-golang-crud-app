@@ -47,5 +47,8 @@ func InitializeApp(app *fiber.App) {
 	}
 	app.Use(cors.New(cors.Config{AllowCredentials: true}))
 	repo.SetupRoutes(app)
-	app.Listen(":8080")
+	listenErr := app.Listen(":8080")
+	if listenErr != nil {
+		log.Fatal(listenErr)
+	}
 }
