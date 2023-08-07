@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
 	"github.com/pooulad/nextjs-golang-crud-app/database/migrations"
-	"github.com/pooulad/nextjs-golang-crud-app/database/migrations/models/storage"
+	"github.com/pooulad/nextjs-golang-crud-app/database/storage"
 	"github.com/pooulad/nextjs-golang-crud-app/repository"
 )
 
