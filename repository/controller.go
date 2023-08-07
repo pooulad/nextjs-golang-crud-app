@@ -6,7 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/morkid/paginate"
 	"github.com/pooulad/nextjs-golang-crud-app/database/migrations"
-	"github.com/pooulad/nextjs-golang-crud-app/database/migrations/models"
+	"github.com/pooulad/nextjs-golang-crud-app/database/models"
 	"gopkg.in/go-playground/validator.v9"
 )
 
