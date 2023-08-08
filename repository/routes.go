@@ -5,9 +5,6 @@ import (
 )
 
 func (repo *Repository) SetupRoutes(app *fiber.App) {
-	//routes.Setup(repo, app)
-	// app.Static("/", "./frontend")
-
 	api := app.Group("/api")
 	api.Get("/users", repo.GetUsers)
 	api.Post("/users", repo.CreateUser)
