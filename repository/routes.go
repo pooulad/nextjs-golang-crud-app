@@ -7,8 +7,8 @@ import (
 func (repo *Repository) SetupRoutes(app *fiber.App) {
 	api := app.Group("/api")
 	api.Get("/users", repo.GetUsers)
-	api.Post("/users", repo.CreateUser)
-	api.Patch("/users/:id", repo.UpdateUser)
-	api.Delete("/users/:id", repo.DeleteUser)
-	api.Get("/users/:id", repo.GetUserByID)
+	api.Post("/user", repo.CreateUser)
+	api.Patch("/user/:id", repo.UpdateUser)
+	api.Delete("/user/:id", repo.DeleteUser)
+	api.Get("/user/:id", repo.GetUserByID)
 }
