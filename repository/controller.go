@@ -163,3 +163,16 @@ func (r *Repository) GetUserByID(context *fiber.Ctx) error {
 	context.Status(http.StatusOK).JSON(&fiber.Map{"message": "User id fetched successfully", "data": userModel})
 	return nil
 }
+
+func (r *Repository) Login(context *fiber.Ctx) error {
+	user := models.User{}
+	err := context.BodyParser(&user)
+	if err != nil {
+		context.Status(http.StatusUnprocessableEntity).JSON(
+			&fiber.Map{"message": "Request failed"})
+
+		return err
+	}
+
+	return nil
+}
