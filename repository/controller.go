@@ -2,8 +2,11 @@ package repository
 
 import (
 	"net/http"
+	"os"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/morkid/paginate"
 	"github.com/pooulad/nextjs-golang-crud-app/database/migrations"
 	"github.com/pooulad/nextjs-golang-crud-app/database/models"
@@ -61,13 +64,13 @@ func (r *Repository) CreateUser(context *fiber.Ctx) error {
 	}
 
 	context.Status(http.StatusOK).JSON(&fiber.Map{"message": "User has been added", "data": &fiber.Map{
-		"id":      user.ID,
-		"name":    user.Name,
-		"username":    user.Username,
-		"email":   user.Email,
-		"date":    user.Date,
-		"city":    user.City,
-		"country": user.Country,
+		"id":       user.ID,
+		"name":     user.Name,
+		"username": user.Username,
+		"email":    user.Email,
+		"date":     user.Date,
+		"city":     user.City,
+		"country":  user.Country,
 	}})
 	return nil
 }
@@ -164,15 +167,45 @@ func (r *Repository) GetUserByID(context *fiber.Ctx) error {
 	return nil
 }
 
-func (r *Repository) Login(context *fiber.Ctx) error {
-	user := models.User{}
-	err := context.BodyParser(&user)
+func (r *Repository) Login(context *fiber.Ctx) {
+	var body struct {
+		Username string
+		Password string
+	}
+	err := context.BodyParser(&body)
 	if err != nil {
 		context.Status(http.StatusUnprocessableEntity).JSON(
 			&fiber.Map{"message": "Request failed"})
 
-		return err
+		return
 	}
 
-	return nil
+	user := models.User{}
+	db := r.DB
+
+	db.First(&user, "username = ?", body.Username)
+
+	if user.ID == 0 {
+		context.Status(http.StatusBadRequest).JSON(
+			&fiber.Map{"message": "invalid username or password"})
+
+		return
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"sub": user.ID,
+		"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
+	})
+
+	// Sign and get the complete encoded token as a string using the secret
+	tokenString, err := token.SignedString(os.Getenv("SECRET_JWT"))
+
+	if err != nil {
+		context.Status(http.StatusInternalServerError).JSON(
+			&fiber.Map{"message": "failed to create token"})
+
+		return
+	}
+	context.Status(http.StatusOK).JSON(
+		&fiber.Map{"token": tokenString})
 }
