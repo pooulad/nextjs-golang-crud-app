@@ -167,7 +167,7 @@ func (r *Repository) GetUserByID(context *fiber.Ctx) error {
 	return nil
 }
 
-func (r *Repository) Login(context *fiber.Ctx) {
+func (r *Repository) Login(context *fiber.Ctx) error {
 	var body struct {
 		Username string
 		Password string
@@ -177,7 +177,7 @@ func (r *Repository) Login(context *fiber.Ctx) {
 		context.Status(http.StatusUnprocessableEntity).JSON(
 			&fiber.Map{"message": "Request failed"})
 
-		return
+		return err
 	}
 
 	user := models.User{}
@@ -189,7 +189,7 @@ func (r *Repository) Login(context *fiber.Ctx) {
 		context.Status(http.StatusBadRequest).JSON(
 			&fiber.Map{"message": "invalid username or password"})
 
-		return
+		return db.Error
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
@@ -204,8 +204,10 @@ func (r *Repository) Login(context *fiber.Ctx) {
 		context.Status(http.StatusInternalServerError).JSON(
 			&fiber.Map{"message": "failed to create token"})
 
-		return
+		return err
 	}
 	context.Status(http.StatusOK).JSON(
 		&fiber.Map{"token": tokenString})
+
+	return nil
 }
