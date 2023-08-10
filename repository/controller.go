@@ -92,7 +92,7 @@ func (r *Repository) UpdateUser(context *fiber.Ctx) error {
 		if err != nil {
 			return context.Status(http.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Couldn't hash user password", "data": err})
 		}
-	
+
 		user.Password = string(hash)
 	}
 
@@ -146,11 +146,19 @@ func (r *Repository) GetUserByID(context *fiber.Ctx) error {
 		return nil
 	}
 
-	err := r.DB.Where("id = ?", id).First(userModel).Error
+	err := r.DB.Where("id = ?", id).First(&userModel).Error
 	if err != nil {
 		context.Status(http.StatusBadRequest).JSON(&fiber.Map{"message": "Could not get the user"})
 		return err
 	}
-	context.Status(http.StatusOK).JSON(&fiber.Map{"message": "User id fetched successfully", "data": userModel})
+
+	context.Status(http.StatusOK).JSON(&fiber.Map{"message": "User id fetched successfully", "data": &fiber.Map{
+		"id":      userModel.ID,
+		"name":    userModel.Name,
+		"city":    userModel.City,
+		"country": userModel.Country,
+		"date":    userModel.Date,
+		"email":   userModel.Email,
+	}})
 	return nil
 }
