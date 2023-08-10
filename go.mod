@@ -13,6 +13,9 @@ require (
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
+	github.com/fatih/color v1.9.0 // indirect
+	github.com/fsnotify/fsnotify v1.4.9 // indirect
+	github.com/githubnemo/CompileDaemon v1.4.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/golang-jwt/jwt/v5 v5.0.0 // indirect
@@ -29,6 +32,7 @@ require (
 	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/mattn/go-runewidth v0.0.14 // indirect
 	github.com/morkid/gocache v1.0.0 // indirect
+	github.com/radovskyb/watcher v1.0.7 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.48.0 // indirect
