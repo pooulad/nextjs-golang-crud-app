@@ -63,6 +63,7 @@ func (r *Repository) CreateUser(context *fiber.Ctx) error {
 	context.Status(http.StatusOK).JSON(&fiber.Map{"message": "User has been added", "data": &fiber.Map{
 		"id":      user.ID,
 		"name":    user.Name,
+		"username":    user.Username,
 		"email":   user.Email,
 		"date":    user.Date,
 		"city":    user.City,
