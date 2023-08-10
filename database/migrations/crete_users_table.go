@@ -13,7 +13,7 @@ type Users struct {
 	Date     time.Time `json:"date"`
 	City     *string   `json:"city"`
 	Country  *string   `json:"country"`
-	Password *string   `json:"password"`
+	Password *string   `json:"-"`
 }
 
 func MigrateUsers(db *gorm.DB) error {

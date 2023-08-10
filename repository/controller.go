@@ -152,13 +152,6 @@ func (r *Repository) GetUserByID(context *fiber.Ctx) error {
 		return err
 	}
 
-	context.Status(http.StatusOK).JSON(&fiber.Map{"message": "User id fetched successfully", "data": &fiber.Map{
-		"id":      userModel.ID,
-		"name":    userModel.Name,
-		"city":    userModel.City,
-		"country": userModel.Country,
-		"date":    userModel.Date,
-		"email":   userModel.Email,
-	}})
+	context.Status(http.StatusOK).JSON(&fiber.Map{"message": "User id fetched successfully", "data": userModel})
 	return nil
 }
