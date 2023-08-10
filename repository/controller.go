@@ -7,6 +7,7 @@ import (
 	"github.com/morkid/paginate"
 	"github.com/pooulad/nextjs-golang-crud-app/database/migrations"
 	"github.com/pooulad/nextjs-golang-crud-app/database/models"
+	"golang.org/x/crypto/bcrypt"
 	"gopkg.in/go-playground/validator.v9"
 )
 
@@ -48,6 +49,13 @@ func (r *Repository) CreateUser(context *fiber.Ctx) error {
 		return context.Status(fiber.StatusBadRequest).JSON(errors)
 	}
 
+	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
+	if err != nil {
+		return context.Status(http.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Couldn't hash user password", "data": err})
+	}
+
+	user.Password = string(hash)
+
 	if err := r.DB.Create(&user).Error; err != nil {
 		return context.Status(http.StatusBadRequest).JSON(fiber.Map{"status": "error", "message": "Couldn't create user", "data": err})
 	}
@@ -77,6 +85,14 @@ func (r *Repository) UpdateUser(context *fiber.Ctx) error {
 		context.Status(http.StatusInternalServerError).JSON(&fiber.Map{"message": "ID cannot be empty"})
 		return nil
 	}
+
+	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
+	if err != nil {
+		return context.Status(http.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Couldn't hash user password", "data": err})
+	}
+
+	user.Password = string(hash)
+
 	if db.Model(&user).Where("id = ?", id).Updates(&user).RowsAffected == 0 {
 		context.Status(http.StatusBadRequest).JSON(&fiber.Map{"message": "Could not get User with given id"})
 	}
