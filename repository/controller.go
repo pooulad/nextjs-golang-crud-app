@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"time"
@@ -198,16 +199,16 @@ func (r *Repository) Login(context *fiber.Ctx) error {
 	})
 
 	// Sign and get the complete encoded token as a string using the secret
-	tokenString, err := token.SignedString(os.Getenv("SECRET_JWT"))
-
+	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET_JWT")))
+	fmt.Print(os.Getenv("SECRET_JWT"))
 	if err != nil {
 		context.Status(http.StatusInternalServerError).JSON(
 			&fiber.Map{"message": "failed to create token"})
 
 		return err
 	}
+	
 	context.Status(http.StatusOK).JSON(
 		&fiber.Map{"token": tokenString})
-
 	return nil
 }
