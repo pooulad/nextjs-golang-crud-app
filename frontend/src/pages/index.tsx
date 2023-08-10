@@ -7,11 +7,6 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [state, setState] = useState<any>([]);
-  // async function getData() {
-  //   const res = await fetch('http://localhost:8080/api/users');
-  //   const data = await res.json();
-  //   setState(data);
-  // }
   const getData = () => {
     axios
       .get("http://localhost:8080/api/users")
