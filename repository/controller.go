@@ -60,7 +60,14 @@ func (r *Repository) CreateUser(context *fiber.Ctx) error {
 		return context.Status(http.StatusBadRequest).JSON(fiber.Map{"status": "error", "message": "Couldn't create user", "data": err})
 	}
 
-	context.Status(http.StatusOK).JSON(&fiber.Map{"message": "User has been added", "data": user})
+	context.Status(http.StatusOK).JSON(&fiber.Map{"message": "User has been added", "data": &fiber.Map{
+		"id":      user.ID,
+		"name":    user.Name,
+		"email":   user.Email,
+		"date":    user.Date,
+		"city":    user.City,
+		"country": user.Country,
+	}})
 	return nil
 }
 func (r *Repository) UpdateUser(context *fiber.Ctx) error {
