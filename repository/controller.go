@@ -207,8 +207,11 @@ func (r *Repository) Login(context *fiber.Ctx) error {
 
 		return err
 	}
-	
+
 	context.Status(http.StatusOK).JSON(
 		&fiber.Map{"token": tokenString})
 	return nil
+}
+func (r *Repository) Authentication(context *fiber.Ctx) error {
+	
 }
