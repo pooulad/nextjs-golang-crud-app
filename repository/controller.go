@@ -222,5 +222,5 @@ func (r *Repository) Login(context *fiber.Ctx) error {
 	return nil
 }
 func (r *Repository) Authentication(context *fiber.Ctx) error {
-	
+
 }
