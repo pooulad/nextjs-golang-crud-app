@@ -193,6 +193,15 @@ func (r *Repository) Login(context *fiber.Ctx) error {
 		return db.Error
 	}
 
+	compaireErr := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
+
+	if compaireErr != nil {
+		context.Status(http.StatusBadRequest).JSON(
+			&fiber.Map{"message": "invalid password"})
+
+		return compaireErr
+	}
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"sub": user.ID,
 		"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
