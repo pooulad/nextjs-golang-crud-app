@@ -4,9 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"strings"
 	"time"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/morkid/paginate"
@@ -222,45 +220,45 @@ func (r *Repository) Login(context *fiber.Ctx) error {
 		&fiber.Map{"token": tokenString})
 	return nil
 }
-func (r *Repository) Authentication(context *fiber.Ctx) error {
-	return fmt.Errorf("w")
-}
+// func (r *Repository) Authentication(context *fiber.Ctx) error {
+// 	return fmt.Errorf("w")
+// }
 
-func (r *Repository) RequireAuth(context *fiber.Ctx) error {
-	var tokenString string
-	authorization := context.Get("Authorization")
+// func (r *Repository) RequireAuth(context *fiber.Ctx) error {
+// 	var tokenString string
+// 	authorization := context.Get("Authorization")
 
-	if strings.HasPrefix(authorization, "Bearer ") {
-		tokenString = strings.TrimPrefix(authorization, "Bearer ")
-	} else if context.Cookies("token") != "" {
-		tokenString = context.Cookies("token")
-	}
+// 	if strings.HasPrefix(authorization, "Bearer ") {
+// 		tokenString = strings.TrimPrefix(authorization, "Bearer ")
+// 	} else if context.Cookies("token") != "" {
+// 		tokenString = context.Cookies("token")
+// 	}
 
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
-		}
-		return []byte(os.Getenv("SECRET_JWT")), nil
-	})
+// 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+// 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+// 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+// 		}
+// 		return []byte(os.Getenv("SECRET_JWT")), nil
+// 	})
 
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		if float64(time.Now().Unix()) > claims["exp"].(float64) {
-			var user models.User
-			r.DB.First(&user, claims["sub"])
+// 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+// 		if float64(time.Now().Unix()) > claims["exp"].(float64) {
+// 			var user models.User
+// 			r.DB.First(&user, claims["sub"])
 
-			if user.ID == 0 {
-				context.Status(http.StatusUnprocessableEntity).JSON(
-					&fiber.Map{"message": "user not found in token"})
+// 			if user.ID == 0 {
+// 				context.Status(http.StatusUnprocessableEntity).JSON(
+// 					&fiber.Map{"message": "user not found in token"})
 
-				return context.Status(http.StatusUnprocessableEntity).JSON(
-					&fiber.Map{"message": "user not found in token"})
-			}
-			context.Set("user", user.Name)
-		}
-		context.Next()
-	} else {
-		fmt.Println(err)
-	}
+// 				return context.Status(http.StatusUnprocessableEntity).JSON(
+// 					&fiber.Map{"message": "user not found in token"})
+// 			}
+// 			context.Set("user", user.Name)
+// 		}
+// 		context.Next()
+// 	} else {
+// 		fmt.Println(err)
+// 	}
 
-	return nil
-}
+// 	return nil
+// }
