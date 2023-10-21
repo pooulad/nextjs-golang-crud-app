@@ -27,7 +27,7 @@ export default function Home() {
     >
       <div className="w-50 p-10 bg-sky-600 text-white rounded-md">
         {state?.data?.items?.map((item: any) => {
-          return <li>{item.name}</li>;
+          return <li>{item.email}</li>;
         })}
       </div>
     </main>
