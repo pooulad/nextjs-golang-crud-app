@@ -108,7 +108,7 @@ func (r *Repository) UpdateUser(context *fiber.Ctx) error {
 	}
 
 	if db.Model(&user).Where("id = ?", id).Updates(&user).RowsAffected == 0 {
-		context.Status(http.StatusBadRequest).JSON(&fiber.Map{"message": "Could not get User with given id"})
+		return context.Status(http.StatusBadRequest).JSON(&fiber.Map{"message": "Username is duplicate : database error"})
 	}
 
 	return context.JSON(fiber.Map{"status": "success", "message": "User successfully updated"})
