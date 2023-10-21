@@ -2,9 +2,6 @@ package repository
 
 import (
 	"fmt"
-	"net/http"
-	"os"
-	"time"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/morkid/paginate"
@@ -12,6 +9,9 @@ import (
 	"github.com/pooulad/nextjs-golang-crud-app/database/models"
 	"golang.org/x/crypto/bcrypt"
 	"gopkg.in/go-playground/validator.v9"
+	"net/http"
+	"os"
+	"time"
 )
 
 type ErrorResponse struct {
@@ -163,7 +163,10 @@ func (r *Repository) GetUserByID(context *fiber.Ctx) error {
 		return err
 	}
 
-	context.Status(http.StatusOK).JSON(&fiber.Map{"message": "User id fetched successfully", "data": userModel})
+	user := context.Locals("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	userId := claims["sub"].(float64)
+	context.Status(http.StatusOK).JSON(&fiber.Map{"message": "User id fetched successfully", "data": userModel, "userId": userId})
 	return nil
 }
 
@@ -220,6 +223,7 @@ func (r *Repository) Login(context *fiber.Ctx) error {
 		&fiber.Map{"token": tokenString})
 	return nil
 }
+
 // func (r *Repository) Authentication(context *fiber.Ctx) error {
 // 	return fmt.Errorf("w")
 // }
