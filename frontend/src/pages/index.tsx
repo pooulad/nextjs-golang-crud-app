@@ -1,16 +1,18 @@
 import { Inter } from "next/font/google";
 import { GetServerSidePropsContext } from "next";
+import configJson from "../config.json";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home({users}:any) {
+export default function Home({ users }: any) {
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+      className={`flex min-h-screen flex-col items-center p-4 ${inter.className}`}
     >
-      <div className="w-50 p-10 bg-sky-600 text-white rounded-md">
+      <h1 className="mb-3">All Users</h1>
+      <div className="w-full grid grid-cols-1 gap-2 md:grid-cols-2">
         {users?.data?.items?.map((item: any) => {
-          return <li>{item.email}</li>;
+          return <li className="w-full mx-auto p-10 bg-sky-600 text-white rounded-md">user email : {item.email}</li>;
         })}
       </div>
     </main>
@@ -18,7 +20,7 @@ export default function Home({users}:any) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const res = await fetch('http://127.0.0.1:8080/api/users');
+  const res = await fetch(`${configJson.localApi}/api/users`);
   const users = await res.json();
   if (!users)
     return {
