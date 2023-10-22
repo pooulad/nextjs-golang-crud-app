@@ -3,7 +3,7 @@ import { useUserContext } from "../context/UserContext";
 import Link from "next/link";
 
 function Navbar() {
-  const { userData } = useUserContext();
+  const { data } = useUserContext();
   return (
     <NavbarBs className="bg-dark text-light mb-3">
       <Container>
