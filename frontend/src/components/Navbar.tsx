@@ -4,6 +4,8 @@ import Link from "next/link";
 
 function Navbar() {
   const { data } = useUserContext();
+  console.log(data);
+  
   return (
     <NavbarBs className="bg-dark text-light mb-3">
       <Container>
