@@ -11,6 +11,7 @@ type UserItemType = {
 };
 
 type UserContextType = {
+  userData: object;
 };
 
 const UserContext = createContext({} as UserContextType);
@@ -20,12 +21,12 @@ export function useUserContext() {
 }
 
 export function UserProvider({ children }: UserProviderProps) {
-  const [cartItems, setUserItems] = useLocalStorage<UserItemType[]>("user", []);
-
+  const [userData, setUserData] = useLocalStorage<UserItemType[]>("user", []);
 
   return (
     <UserContext.Provider
       value={{
+        userData,
       }}
     >
       {children}
