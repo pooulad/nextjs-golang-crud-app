@@ -22,10 +22,8 @@ export default function Home({users}:any) {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   // const users = await axios.get("http://localhost:8080/api/users");
-  // console.log(users);
   const res = await fetch('http://127.0.0.1:8080/api/users');
   const users = await res.json();
-  
   if (!users)
     return {
       props: {},
