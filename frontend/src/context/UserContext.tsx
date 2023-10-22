@@ -52,13 +52,6 @@ export function UserProvider({ children }: UserProviderProps) {
     }
   }
   return (
-    <UserContext.Provider
-      value={{
-        data,
-        token,
-      }}
-    >
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={userData}>{children}</UserContext.Provider>
   );
 }
