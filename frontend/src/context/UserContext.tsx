@@ -1,33 +1,25 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import configJson from "@/config.json";
+import { useRouter } from "next/router";
 
 type UserProviderProps = {
   children: ReactNode;
 };
 
-type UserItemType = {
-  userData: {
-    id: number,
-    username: string,
-    name: string,
-    email: string,
-    date: string,
-    city: string,
-    country: string
-};
+type apiDataType = {
+  id: number;
+  username: string;
+  name: string;
+  email: string;
+  date: string;
+  city: string;
+  country: string;
 };
 
 type UserContextType = {
-  userData: {
-      id: number,
-      username: string,
-      name: string,
-      email: string,
-      date: string,
-      city: string,
-      country: string
-  };
+  data: apiDataType;
+  token: string;
 };
 
 const UserContext = createContext({} as UserContextType);
@@ -37,17 +29,33 @@ export function useUserContext() {
 }
 
 export function UserProvider({ children }: UserProviderProps) {
-  const [userData, setUserData] = useLocalStorage<UserItemType[]>("user", []);
-
+  const [userData, setUserData] = useLocalStorage<UserContextType>("user");
+  const router = useRouter();
   async function checkUserPermission() {
-    if(userData.id)
-    const res = await fetch(`${configJson.localApi}/api/user`);
-    const users = await res.json();
+    if (userData.data.id && userData.token) {
+      const res = await fetch(
+        `${configJson.localApi}/api/user/${userData.data.id}`,
+        {
+          headers: { Authorization: `Bearer ${userData.token}` },
+        }
+      );
+      const user = await res.json();
+      if (user.id) {
+        setUserData({
+          data: user,
+          token: userData.token,
+        });
+      }
+      console.log(user);
+    } else {
+      router.push("/login");
+    }
   }
   return (
     <UserContext.Provider
       value={{
-        userData,
+        data,
+        token,
       }}
     >
       {children}
