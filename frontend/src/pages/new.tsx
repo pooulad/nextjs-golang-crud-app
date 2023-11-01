@@ -2,7 +2,7 @@
 import axios from "axios";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import configJson from "../config.json"
+import configJson from "../config.json";
 
 function NewUserPage() {
   type Inputs = {
@@ -24,14 +24,14 @@ function NewUserPage() {
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
-    axios.post(`${configJson.localApi}/user`,data).then((res) => {
-      console.log(res);
-      
-    }).catch((err) => {
-      console.log(err);
-      
-    })
-    
+    axios
+      .post(`${configJson.localApi}/user`, data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <main className={`flex min-h-screen flex-col items-center p-4`}>
@@ -59,6 +59,28 @@ function NewUserPage() {
             {errors.username && (
               <p className="text-red-500 text-xs italic">
                 Please choose a username.
+              </p>
+            )}
+          </div>
+          <div className="mb-6">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <input
+              className={`shadow appearance-none border ${
+                errors.email && "border-red-500"
+              } rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline`}
+              id="email"
+              type="email"
+              placeholder="Email"
+              {...register("email", { required: true })}
+            />
+            {errors.email && (
+              <p className="text-red-500 text-xs italic">
+                Please choose a email.
               </p>
             )}
           </div>
