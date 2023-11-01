@@ -125,7 +125,7 @@ function NewUserPage() {
               } rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline`}
               id="city"
               type="text"
-              placeholder="Name"
+              placeholder="City"
               {...register("city", { required: true })}
             />
             {errors.city && (
@@ -147,7 +147,7 @@ function NewUserPage() {
               } rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline`}
               id="country"
               type="text"
-              placeholder="Name"
+              placeholder="Country"
               {...register("country", { required: true })}
             />
             {errors.country && (
