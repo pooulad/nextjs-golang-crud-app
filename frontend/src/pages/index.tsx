@@ -19,15 +19,18 @@ export default function Home({ users }: any) {
   );
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const res = await fetch(`${configJson.localApi}/api/users`);
-  const users = await res.json();
-  if (!users)
-    return {
-      props: {},
+// export async function getServerSideProps(context: GetServerSidePropsContext) {
+//   const res = await fetch(`${configJson.localApi}/api/users`);
+//   const users = await res.json();
+//   console.log(users);
+//   console.log(res);
+  
+//   if (!users)
+//     return {
+//       props: {},
 
-      redirect: { destination: "/login" },
-    };
+//       redirect: { destination: "/login" },
+//     };
 
-  return { props: { users } };
-}
+//   return { props: { users } };
+// }
