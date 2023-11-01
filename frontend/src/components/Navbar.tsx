@@ -10,6 +10,10 @@ function Navbar() {
       setToken(token);
     }
   }, []);
+  const logoutHandler = () => {
+    localStorage.clear();
+    window.dispatchEvent(new Event("storage"));
+  }
   return (
     <nav className="flex flex-row items-center justify-between bg-teal-500 p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
@@ -20,7 +24,9 @@ function Navbar() {
       <div className="w-full flex items-center flex-row justify-end align-middle">
         <div>
           {token ? (
-            <>hi</>
+            <button onClick={logoutHandler} className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">
+              Logout
+            </button>
           ) : (
             <Link
               href="/login"
