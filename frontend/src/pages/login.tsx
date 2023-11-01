@@ -4,21 +4,15 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import configJson from "../config.json";
 import { ToastErrorMessage, ToastSuccessMessage } from "@/utils/ToastGenerator";
 import { useRouter } from "next/navigation";
-import ReactLoading from 'react-loading';
-
+import ReactLoading from "react-loading";
 
 function LoginPage() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   type Inputs = {
-    name: string;
     username: string;
     password: string;
-    date: string;
-    country: string;
-    city: string;
-    email: string;
   };
 
   const {
@@ -30,17 +24,20 @@ function LoginPage() {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     setLoading(true);
     axios
-      .post(`${configJson.localApi}/user`, data)
+      .post(`${configJson.localApi}/login`, data)
       .then((res) => {
         if (res.status === 200) {
-          ToastSuccessMessage(res.data.message);
+          ToastSuccessMessage("You logged in");
+          localStorage.setItem("token", JSON.stringify(res.data.token));
           setTimeout(() => {
             router.push("/");
           }, 3000);
         }
       })
       .catch((err) => {
-        ToastErrorMessage(err + " Error happend. maybe username or email is duplicate...");
+        ToastErrorMessage(
+          err + " Error happend. maybe username or password is incorrect..."
+        );
       })
       .finally(() => {
         setLoading(false);
@@ -50,7 +47,13 @@ function LoginPage() {
     <main className={`flex min-h-screen flex-col items-center p-4`}>
       {loading ? (
         <>
-          <ReactLoading type={"bars"} color={"red"} height={200} width={200} className="flex flex-row min-h-screen justify-center items-center" />
+          <ReactLoading
+            type={"bars"}
+            color={"red"}
+            height={200}
+            width={200}
+            className="flex flex-row min-h-screen justify-center items-center"
+          />
         </>
       ) : (
         <>
