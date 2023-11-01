@@ -4,12 +4,10 @@ import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import configJson from "../config.json";
 import { ToastErrorMessage, ToastSuccessMessage } from "@/utils/ToastGenerator";
-import { useRouter } from "next/navigation";
 import ReactLoading from "react-loading";
 
 function LoginPage() {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   type Inputs = {
     username: string;
@@ -31,7 +29,6 @@ function LoginPage() {
           ToastSuccessMessage("You logged in");
           localStorage.setItem("token", JSON.stringify(res.data.token));
           setTimeout(() => {
-            // router.push("/");
             window.location.replace("/")
           }, 3000);
         }
