@@ -40,7 +40,7 @@ function NewUserPage() {
         }
       })
       .catch((err) => {
-        ToastErrorMessage(err.message);
+        ToastErrorMessage(err + " Error happend. maybe username or email is duplicate...");
       })
       .finally(() => {
         setLoading(false);
@@ -50,7 +50,7 @@ function NewUserPage() {
     <main className={`flex min-h-screen flex-col items-center p-4`}>
       {loading ? (
         <>
-          <ReactLoading type={"balls"} color={"gold"} height={667} width={375} />
+          <ReactLoading type={"bars"} color={"red"} height={200} width={200} className="flex flex-row min-h-screen justify-center items-center" />
         </>
       ) : (
         <>
