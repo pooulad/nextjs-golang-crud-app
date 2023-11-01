@@ -54,7 +54,7 @@ function NewUserPage() {
               id="username"
               type="text"
               placeholder="Username"
-              {...register("username", { required: true })}
+              {...register("username", { required: true, min: 3 })}
             />
             {errors.username && (
               <p className="text-red-500 text-xs italic">
