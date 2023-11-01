@@ -1,4 +1,3 @@
-"use client";
 import axios from "axios";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -7,6 +6,8 @@ import { ToastErrorMessage, ToastSuccessMessage } from "@/utils/ToastGenerator";
 import { useRouter } from "next/navigation";
 
 function NewUserPage() {
+  const router = useRouter()
+
   type Inputs = {
     name: string;
     username: string;
