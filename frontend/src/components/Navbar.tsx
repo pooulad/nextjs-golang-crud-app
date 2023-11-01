@@ -6,11 +6,11 @@ function Navbar() {
     <NavbarBs className="bg-dark text-light mb-3">
       <Container>
         <Nav className="me-auto">
-          <Link href="/" passHref>
+          <Link className="p-5 m-4" href="/" passHref>
             Home
           </Link>
-          <Link href="/login" passHref>
-            Lpgin
+          <Link className="p-5 m-4" href="/login" passHref>
+            Login
           </Link>
         </Nav>
       </Container>
