@@ -1,6 +1,8 @@
 "use client";
+import axios from "axios";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import configJson from "../config.json"
 
 function NewUserPage() {
   type Inputs = {
@@ -20,7 +22,17 @@ function NewUserPage() {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {};
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log(data);
+    axios.post(`${configJson.localApi}/user`,data).then((res) => {
+      console.log(res);
+      
+    }).catch((err) => {
+      console.log(err);
+      
+    })
+    
+  };
   return (
     <main className={`flex min-h-screen flex-col items-center p-4`}>
       <div className="w-full max-w-xs">
