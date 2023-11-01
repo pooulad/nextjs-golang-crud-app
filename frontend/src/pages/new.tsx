@@ -3,6 +3,8 @@ import axios from "axios";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import configJson from "../config.json";
+import { ToastErrorMessage, ToastSuccessMessage } from "@/utils/ToastGenerator";
+import { useRouter } from "next/navigation";
 
 function NewUserPage() {
   type Inputs = {
@@ -18,19 +20,22 @@ function NewUserPage() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
     axios
       .post(`${configJson.localApi}/user`, data)
       .then((res) => {
-        console.log(res);
+        if(res.status === 200){
+          ToastSuccessMessage(res.data.message)
+          setTimeout(() => {
+            router.push('/');
+        }, 3000);
+        }
       })
       .catch((err) => {
-        console.log(err);
+        ToastErrorMessage(err.message)
       });
   };
   return (
