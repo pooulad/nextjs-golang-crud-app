@@ -31,7 +31,8 @@ function LoginPage() {
           ToastSuccessMessage("You logged in");
           localStorage.setItem("token", JSON.stringify(res.data.token));
           setTimeout(() => {
-            router.push("/");
+            // router.push("/");
+            window.location.replace("/")
           }, 3000);
         }
       })
@@ -112,7 +113,7 @@ function LoginPage() {
                   className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="submit"
                 >
-                  Sign Up
+                  Sign In
                 </button>
               </div>
             </form>
