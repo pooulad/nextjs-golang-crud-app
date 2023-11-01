@@ -4,6 +4,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import configJson from "../config.json";
 import { ToastErrorMessage, ToastSuccessMessage } from "@/utils/ToastGenerator";
 import { useRouter } from "next/navigation";
+import ReactLoading from 'react-loading';
+
 
 function NewUserPage() {
   const [loading, setLoading] = useState(false);
@@ -48,7 +50,7 @@ function NewUserPage() {
     <main className={`flex min-h-screen flex-col items-center p-4`}>
       {loading ? (
         <>
-          
+          <ReactLoading type={"balls"} color={"gold"} height={667} width={375} />
         </>
       ) : (
         <>
