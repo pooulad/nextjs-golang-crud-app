@@ -16,7 +16,7 @@
     "axios": "^1.4.0",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.13",
-    "next": "13.4.13",
+    "next": "13.5.0",
     "postcss": "8.4.31",
     "react": "18.2.0",
     "react-bootstrap": "^2.9.1",
