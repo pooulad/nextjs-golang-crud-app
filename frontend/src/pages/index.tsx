@@ -21,7 +21,7 @@ export default function Home() {
       <h1 className="mb-3">All Users</h1>
       <div className="w-full">
         <Link
-          className="bg-teal-500 flex flex-row p-3 mt-2 mb-2 rounded-lg w-40 text-center justify-center"
+          className="bg-teal-500 flex text-white font-bold flex-row p-3 mt-2 mb-2 rounded-lg w-40 text-center justify-center"
           href="/new"
           passHref
         >
@@ -33,7 +33,7 @@ export default function Home() {
           return (
             <li
               key={item.id}
-              className="w-full mx-auto p-10 bg-sky-600 text-white rounded-md"
+              className="w-full mx-auto p-10 bg-teal-500 text-white rounded-md"
             >
               user email : {item.email}
             </li>
