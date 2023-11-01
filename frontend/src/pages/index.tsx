@@ -1,5 +1,5 @@
+"use client";
 import axios from "axios";
-import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import configJson from "../config.json";
 import Link from "next/link";
