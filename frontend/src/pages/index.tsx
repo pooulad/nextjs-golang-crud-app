@@ -1,6 +1,4 @@
 import { Inter } from "next/font/google";
-import { GetServerSidePropsContext } from "next";
-import configJson from "../config.json";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,19 +16,3 @@ export default function Home({ users }: any) {
     </main>
   );
 }
-
-// export async function getServerSideProps(context: GetServerSidePropsContext) {
-//   const res = await fetch(`${configJson.localApi}/api/users`);
-//   const users = await res.json();
-//   console.log(users);
-//   console.log(res);
-  
-//   if (!users)
-//     return {
-//       props: {},
-
-//       redirect: { destination: "/login" },
-//     };
-
-//   return { props: { users } };
-// }
