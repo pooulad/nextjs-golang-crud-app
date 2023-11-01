@@ -13,13 +13,11 @@ export default function Home() {
         setUsers(res.data);
       })
       .catch((err) => {
-        alert("error happend");
+        alert(err + " error happend...");
       });
   }, []);
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center p-4`}
-    >
+    <main className={`flex min-h-screen flex-col items-center p-4`}>
       <h1 className="mb-3">All Users</h1>
       <div className="w-full">
         <Link
