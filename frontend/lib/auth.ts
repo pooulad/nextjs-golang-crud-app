@@ -29,7 +29,8 @@ const authOptions: NextAuthOptions = {
             }),
           });
           const user = await res.json();
-          console.log(user);
+          console.log("this is user",user);
+          console.log("this is req",req);
           
   
           if (user) {
@@ -40,6 +41,17 @@ const authOptions: NextAuthOptions = {
         },
       }),
     ],
+    callbacks: {
+      async jwt({ token, user }) {
+        return { ...token, ...user };
+      },
+      async session({ session, token, user }) {
+        console.log("sd",user);
+        
+        session.user = token as any;
+        return session;
+      },
+    },
     pages: {
       signIn: "/auth/signin",
       // signOut: "/auth/signout",

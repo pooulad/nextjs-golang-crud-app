@@ -19,7 +19,6 @@ in back-end:
 in front-end:
  - React hook form
  - Axios
- - React-loading
  - React-toastify
  - Tailwindcss
  - Typescript

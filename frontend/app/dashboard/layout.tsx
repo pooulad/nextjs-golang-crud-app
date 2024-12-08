@@ -12,7 +12,7 @@ export default async function DashboardLayout({
 }: DashboardLayoutProps) {
   const user = await getCurrentUser();
 
-  if (!user) {
+  if (!user?.token) {
     redirect(authOptions?.pages?.signIn || "/auth/signin");
   }
   return (
