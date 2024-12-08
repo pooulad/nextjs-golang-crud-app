@@ -51,7 +51,7 @@ In root frontend directory you should run your next project
   PATCH /api/user/:id -> update user
   GET /api/user/:id -> get single user
   DELETE /api/user/:id -> delete user
-  POST /api/user -> login
+  POST /api/login -> login to account
 ```
 
 
