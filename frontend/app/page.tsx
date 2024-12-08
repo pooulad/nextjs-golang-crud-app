@@ -57,7 +57,7 @@ export default async function Root() {
                 Follow along on Github
               </Link>
               <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
-                An example app built using Next.js 13 server components.
+                An example app built using Next.js 15 server components.
               </h1>
               <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
                 I&apos;m building a crud app with Next.js 13 and open sourcing

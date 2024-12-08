@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { authOptions } from "../../lib/auth";
 import Link from "next/link";
 import { siteConfig } from "../../config/site";
+import { signOut } from "next-auth/react";
+import SignOutButton from "../../components/signout-button/page";
 
 export const metadata = {
   title: "Dashboard",
@@ -40,8 +42,15 @@ export default async function DashboardPage() {
   }
   return (
     <main className={`flex min-h-screen flex-col items-center p-4`}>
+      <header className="container z-40 bg-background">
+        <div className="flex h-20 items-center justify-between py-6">
+          <nav>
+           <SignOutButton className={`absolute left-5 top-5 bg-teal-500 hover:bg-teal-700 text-white font-bold rounded-sm min-w-[70px] text-center`} />
+          </nav>
+        </div>
+      </header>
       <h1 className="mb-3">All Users</h1>
-      <div className="w-full">
+      <div className="w-full flex flex-row gap-5">
         <Link
           className="bg-teal-500 flex text-white font-bold flex-row p-3 mt-2 mb-2 rounded-lg w-40 text-center justify-center"
           href="/auth/signup"
