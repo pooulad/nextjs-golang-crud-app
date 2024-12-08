@@ -1,14 +1,18 @@
 "use client";
+
 import axios from "axios";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import configJson from "../config.json";
-import { ToastErrorMessage, ToastSuccessMessage } from "@/utils/ToastGenerator";
+import { siteConfig } from "../../config/site";
+import {
+  ToastErrorMessage,
+  ToastSuccessMessage,
+} from "../../utils/ToastGenerator";
 import { useRouter } from "next/navigation";
-import ReactLoading from 'react-loading';
+import ReactLoading from "react-loading";
+import Link from "next/link";
 
-
-function NewUserPage() {
+export default function SignUpForm() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -31,7 +35,7 @@ function NewUserPage() {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     setLoading(true);
     axios
-      .post(`${configJson.localApi}/user`, data)
+      .post(`${siteConfig.localApi}/user`, data)
       .then((res) => {
         if (res.status === 200) {
           ToastSuccessMessage(res.data.message);
@@ -41,7 +45,9 @@ function NewUserPage() {
         }
       })
       .catch((err) => {
-        ToastErrorMessage(err + " Error happend. maybe username or email is duplicate...");
+        ToastErrorMessage(
+          err + " Error happend. maybe username or email is duplicate..."
+        );
       })
       .finally(() => {
         setLoading(false);
@@ -51,7 +57,13 @@ function NewUserPage() {
     <main className={`flex min-h-screen flex-col items-center p-4`}>
       {loading ? (
         <>
-          <ReactLoading type={"bars"} color={"red"} height={200} width={200} className="flex flex-row min-h-screen justify-center items-center" />
+          <ReactLoading
+            type={"bars"}
+            color={"red"}
+            height={200}
+            width={200}
+            className="flex flex-row min-h-screen justify-center items-center"
+          />
         </>
       ) : (
         <>
@@ -223,8 +235,13 @@ function NewUserPage() {
                 </button>
               </div>
             </form>
-            <p className="text-center text-gray-500 text-xs">
-              &copy;2020 Acme Corp. All rights reserved.
+            <p className="px-8 text-center text-sm text-muted-foreground">
+              <Link
+                href="/auth/signin"
+                className="hover:text-brand underline underline-offset-4"
+              >
+                Do you have an account? Sign In
+              </Link>
             </p>
           </div>
         </>
@@ -232,5 +249,3 @@ function NewUserPage() {
     </main>
   );
 }
-
-export default NewUserPage;

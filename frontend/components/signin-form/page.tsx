@@ -1,12 +1,13 @@
 "use client";
-import axios from "axios";
-import React, { useState } from "react";
+
+import { signIn } from "next-auth/react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import configJson from "../config.json";
-import { ToastErrorMessage, ToastSuccessMessage } from "@/utils/ToastGenerator";
 import ReactLoading from "react-loading";
 
-function LoginPage() {
+export default function SignInForm() {
   const [loading, setLoading] = useState(false);
 
   type Inputs = {
@@ -20,27 +21,18 @@ function LoginPage() {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const searchParams = useSearchParams();
+
+  const onSubmit: SubmitHandler<Inputs> = async (data, e) => {
+    e?.preventDefault();
     setLoading(true);
-    axios
-      .post(`${configJson.localApi}/login`, data)
-      .then((res) => {
-        if (res.status === 200) {
-          ToastSuccessMessage("You logged in");
-          localStorage.setItem("token", JSON.stringify(res.data.token));
-          setTimeout(() => {
-            window.location.replace("/")
-          }, 3000);
-        }
-      })
-      .catch((err) => {
-        ToastErrorMessage(
-          err + " Error happend. maybe username or password is incorrect..."
-        );
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    const signInResult = await signIn("credentials", {
+      username: data.username,
+      password: data.password,
+      redirect: true,
+      callbackUrl: searchParams?.get("from") || "/dashboard",
+    });
+    setLoading(false);
   };
   return (
     <main className={`flex min-h-screen flex-col items-center p-4`}>
@@ -114,8 +106,13 @@ function LoginPage() {
                 </button>
               </div>
             </form>
-            <p className="text-center text-gray-500 text-xs">
-              &copy;2020 Acme Corp. All rights reserved.
+            <p className="px-8 text-center text-sm text-muted-foreground">
+              <Link
+                href="/auth/signup"
+                className="hover:text-brand underline underline-offset-4"
+              >
+                Don&apos;t have an account? Sign Up
+              </Link>
             </p>
           </div>
         </>
@@ -123,5 +120,3 @@ function LoginPage() {
     </main>
   );
 }
-
-export default LoginPage;
