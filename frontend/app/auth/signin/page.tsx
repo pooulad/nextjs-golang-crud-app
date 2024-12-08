@@ -12,7 +12,10 @@ export const metadata: Metadata = {
 export default async function SignIn() {
   const user = await getCurrentUser();
 
-  if (user) {
+  console.log("user",user);
+  
+
+  if (user?.token) {
     redirect("/dashboard");
   }
 

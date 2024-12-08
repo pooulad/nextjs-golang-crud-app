@@ -1,10 +1,9 @@
 import React from "react";
 import { getCurrentUser } from "../../lib/session";
 import { redirect } from "next/navigation";
-import { authOptions } from "../../lib/auth";
+import { authOptions, getSession } from "../../lib/auth";
 import Link from "next/link";
 import { siteConfig } from "../../config/site";
-import { signOut } from "next-auth/react";
 import SignOutButton from "../../components/signout-button/page";
 
 export const metadata = {
@@ -13,10 +12,16 @@ export const metadata = {
 };
 
 async function getUsers(): Promise<any | null> {
+  const session = await getSession();
+  console.log("session", session);
+
   try {
     const response = await fetch(`${siteConfig.localApi}/users`, {
       next: {
         revalidate: 60,
+      },
+      headers: {
+        Authorization: `Bearer ${session?.user?.token}`,
       },
     });
 
@@ -34,18 +39,17 @@ async function getUsers(): Promise<any | null> {
 }
 
 export default async function DashboardPage() {
-  const users = await getUsers();
   const user = await getCurrentUser();
+  const users = await getUsers();
 
-  if (!user) {
-    redirect(authOptions?.pages?.signIn || "/auth/signin");
-  }
   return (
     <main className={`flex min-h-screen flex-col items-center p-4`}>
       <header className="container z-40 bg-background">
         <div className="flex h-20 items-center justify-between py-6">
           <nav>
-           <SignOutButton className={`absolute left-5 top-5 bg-teal-500 hover:bg-teal-700 text-white font-bold rounded-sm min-w-[70px] text-center`} />
+            <SignOutButton
+              className={`absolute left-5 top-5 bg-teal-500 hover:bg-teal-700 text-white font-bold rounded-sm min-w-[70px] text-center`}
+            />
           </nav>
         </div>
       </header>
