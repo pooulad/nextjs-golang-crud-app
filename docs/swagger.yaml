@@ -1,0 +1,268 @@
+definitions:
+  models.User:
+    properties:
+      city:
+        maxLength: 40
+        type: string
+      country:
+        maxLength: 40
+        type: string
+      date:
+        type: string
+      email:
+        maxLength: 32
+        minLength: 6
+        type: string
+      id:
+        type: integer
+      name:
+        maxLength: 40
+        minLength: 3
+        type: string
+      password:
+        maxLength: 40
+        type: string
+      username:
+        maxLength: 40
+        minLength: 3
+        type: string
+    required:
+    - city
+    - country
+    - date
+    - email
+    - name
+    - password
+    - username
+    type: object
+  repository.LoginRequest:
+    properties:
+      password:
+        example: securepassword123
+        type: string
+      username:
+        example: john_doe
+        type: string
+    type: object
+  repository.LoginResponseFailure:
+    properties:
+      data:
+        example: ""
+        type: string
+      message:
+        example: Invalid username or password
+        type: string
+    type: object
+  repository.LoginResponseOK:
+    properties:
+      token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticates a user with their username and password. Returns
+        a JWT token upon successful login.
+      parameters:
+      - description: User credentials
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/repository.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: JWT token for the user
+          schema:
+            $ref: '#/definitions/repository.LoginResponseOK'
+        "400":
+          description: Invalid username or password
+          schema:
+            $ref: '#/definitions/repository.LoginResponseFailure'
+        "422":
+          description: Request body parsing failed
+          schema:
+            $ref: '#/definitions/repository.LoginResponseFailure'
+        "500":
+          description: Failed to create token
+          schema:
+            $ref: '#/definitions/repository.LoginResponseFailure'
+      summary: User login
+      tags:
+      - auth
+  /users:
+    get:
+      description: Fetches a paginated list of users from the database.
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Paginated list of users
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Server error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: List users
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Accepts user details, validates input, hashes the password, and
+        stores the user in the database.
+      parameters:
+      - description: User details
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User created successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid user data or request error
+          schema:
+            additionalProperties: true
+            type: object
+        "422":
+          description: Request body parsing failed
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Server error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Create a new user
+      tags:
+      - users
+  /users/{id}:
+    delete:
+      description: Deletes a user from the database. Requires a valid user ID.
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User deleted successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Database error during deletion
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: ID cannot be empty
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete a user
+      tags:
+      - users
+    get:
+      description: Fetches details of a user based on their ID.
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User details and associated claims
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Could not fetch the user
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: ID cannot be empty
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get user by ID
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Updates user details such as name, email, or password. Requires
+        a valid user ID.
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated user details
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User updated successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid user data or request error
+          schema:
+            additionalProperties: true
+            type: object
+        "422":
+          description: Request body parsing failed
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Server error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Update user details
+      tags:
+      - users
+swagger: "2.0"
