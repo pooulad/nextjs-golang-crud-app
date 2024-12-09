@@ -37,6 +37,19 @@ func ValidateStruct(user models.User) []*ErrorResponse {
 	return errors
 }
 
+// CreateUser handles the creation of a new user.
+// 
+// @Summary      Create a new user
+// @Description  Accepts user details, validates input, hashes the password, and stores the user in the database.
+// @Tags         users
+// @Accept       json
+// @Produce      json
+// @Param        user  body      models.User  true  "User details"
+// @Success      200   {object}  map[string]interface{}  "User created successfully"
+// @Failure      400   {object}  map[string]interface{}  "Invalid user data or request error"
+// @Failure      422   {object}  map[string]interface{}  "Request body parsing failed"
+// @Failure      500   {object}  map[string]interface{}  "Server error"
+// @Router       /users [post]
 func (r *Repository) CreateUser(context *fiber.Ctx) error {
 	user := models.User{}
 	err := context.BodyParser(&user)
@@ -74,6 +87,21 @@ func (r *Repository) CreateUser(context *fiber.Ctx) error {
 	}})
 	return nil
 }
+
+// UpdateUser updates the details of an existing user.
+// 
+// @Summary      Update user details
+// @Description  Updates user details such as name, email, or password. Requires a valid user ID.
+// @Tags         users
+// @Accept       json
+// @Produce      json
+// @Param        id    path      string        true  "User ID"
+// @Param        user  body      models.User   true  "Updated user details"
+// @Success      200   {object}  map[string]interface{}  "User updated successfully"
+// @Failure      400   {object}  map[string]interface{}  "Invalid user data or request error"
+// @Failure      422   {object}  map[string]interface{}  "Request body parsing failed"
+// @Failure      500   {object}  map[string]interface{}  "Server error"
+// @Router       /users/{id} [put]
 func (r *Repository) UpdateUser(context *fiber.Ctx) error {
 	user := models.User{}
 	err := context.BodyParser(&user)
@@ -114,6 +142,17 @@ func (r *Repository) UpdateUser(context *fiber.Ctx) error {
 	return context.JSON(fiber.Map{"status": "success", "message": "User successfully updated"})
 }
 
+// DeleteUser deletes an existing user.
+// 
+// @Summary      Delete a user
+// @Description  Deletes a user from the database. Requires a valid user ID.
+// @Tags         users
+// @Produce      json
+// @Param        id  path      string  true  "User ID"
+// @Success      200  {object}  map[string]interface{}  "User deleted successfully"
+// @Failure      400  {object}  map[string]interface{}  "Database error during deletion"
+// @Failure      500  {object}  map[string]interface{}  "ID cannot be empty"
+// @Router       /users/{id} [delete]
 func (r *Repository) DeleteUser(context *fiber.Ctx) error {
 	userModel := migrations.Users{}
 	id := context.Params("id")
@@ -132,6 +171,18 @@ func (r *Repository) DeleteUser(context *fiber.Ctx) error {
 	context.Status(http.StatusOK).JSON(&fiber.Map{"message": "User delete successfully"})
 	return nil
 }
+
+// GetUsers retrieves a paginated list of users.
+// 
+// @Summary      List users
+// @Description  Fetches a paginated list of users from the database.
+// @Tags         users
+// @Produce      json
+// @Param        page     query     int    false  "Page number"
+// @Param        size     query     int    false  "Page size"
+// @Success      200  {object}  map[string]interface{}  "Paginated list of users"
+// @Failure      500  {object}  map[string]interface{}  "Server error"
+// @Router       /users [get]
 func (r *Repository) GetUsers(context *fiber.Ctx) error {
 	db := r.DB
 	model := db.Model(&migrations.Users{})
@@ -149,6 +200,17 @@ func (r *Repository) GetUsers(context *fiber.Ctx) error {
 	return nil
 }
 
+// GetUserByID retrieves a user's details by ID.
+// 
+// @Summary      Get user by ID
+// @Description  Fetches details of a user based on their ID.
+// @Tags         users
+// @Produce      json
+// @Param        id  path      string  true  "User ID"
+// @Success      200  {object}  map[string]interface{}  "User details and associated claims"
+// @Failure      400  {object}  map[string]interface{}  "Could not fetch the user"
+// @Failure      500  {object}  map[string]interface{}  "ID cannot be empty"
+// @Router       /users/{id} [get]
 func (r *Repository) GetUserByID(context *fiber.Ctx) error {
 	id := context.Params("id")
 	userModel := &migrations.Users{}
@@ -170,6 +232,19 @@ func (r *Repository) GetUserByID(context *fiber.Ctx) error {
 	return nil
 }
 
+// Login authenticates a user and returns a JWT token.
+// 
+// @Summary      User login
+// @Description  Authenticates a user with their username and password. Returns a JWT token upon successful login.
+// @Tags         auth
+// @Accept       json
+// @Produce      json
+// @Param        credentials  body      LoginRequest  true  "User credentials"
+// @Success      200  {object}  LoginResponseOK  "JWT token for the user"
+// @Failure      400  {object}  LoginResponseFailure  "Invalid username or password"
+// @Failure      422  {object}  LoginResponseFailure  "Request body parsing failed"
+// @Failure      500  {object}  LoginResponseFailure  "Failed to create token"
+// @Router       /login [post]
 func (r *Repository) Login(context *fiber.Ctx) error {
 	var body struct {
 		Username string

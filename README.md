@@ -22,6 +22,7 @@ in front-end:
  - React-toastify
  - Tailwindcss
  - Typescript
+ - Next-auth
 
 
 ## How to run
@@ -53,6 +54,13 @@ In root frontend directory you should run your next project
   POST /api/login -> login to account
 ```
 
+#### TODO Checklist
+
+This section tracks the progress of implemented features in the File Trove CLI tool.
+
+- [x] Add swagger to project.
+- [x] Add Next-auth to project -> frontend directory.
+- [ ] Add all api response states(success,failure).
 
 ## Screenshots
 
