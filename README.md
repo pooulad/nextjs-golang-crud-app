@@ -56,7 +56,7 @@ In root frontend directory you should run your next project
 
 #### TODO Checklist
 
-This section tracks the progress of implemented features in the File Trove CLI tool.
+This section tracks the progress of implemented features in project.
 
 - [x] Add swagger to project.
 - [x] Add Next-auth to project -> frontend directory.
