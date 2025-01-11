@@ -16,7 +16,7 @@
     "axios": "^1.7.4",
     "eslint": "8.46.0",
     "eslint-config-next": "^15.0.4",
-    "next": "^15.0.4",
+    "next": "^15.1.2",
     "next-auth": "^4.24.11",
     "postcss": "8.4.31",
     "react": "^19.0.0",
