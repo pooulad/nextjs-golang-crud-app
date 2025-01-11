@@ -1,8 +1,8 @@
 # nextjs-golang-crud-app
-🚨Simple full-stack project with nextjs and go-lang
+🚨Simple full-stack project with nextjs and golang
 
 The purpose of creating this project is to learn for junior programmers how to implement a full stack application and create the best structure for the application.
-![Screenshot 2023-11-02 024037](https://github.com/pooulad/nextjs-golang-crud-app/assets/86445458/e71ba4ef-033d-4419-8b49-0b2f73eb4bc3)
+![HomePage](https://github.com/pooulad/next-golang-crud-app/blob/main/images/home.png)
 
 ## Technology list in this project
 
@@ -64,8 +64,9 @@ This section tracks the progress of implemented features in project.
 
 ## Screenshots
 
-![Screenshot 2023-11-02 023836](https://github.com/pooulad/nextjs-golang-crud-app/assets/86445458/92e31a27-57c3-41c6-a569-3b92d09642d2)
-![Screenshot 2023-11-02 023905](https://github.com/pooulad/nextjs-golang-crud-app/assets/86445458/895c8c7c-0d86-474d-a45c-48f5e8c0cf27)
+![App SignUp Form](https://github.com/pooulad/next-golang-crud-app/blob/main/images/sign-up.png)
+
+![App SignIn Form](https://github.com/pooulad/next-golang-crud-app/blob/main/images/sign-in.png)
 
 
 
