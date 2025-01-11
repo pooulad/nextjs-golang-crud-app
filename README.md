@@ -2,7 +2,7 @@
 🚨Simple full-stack project with nextjs and golang
 
 The purpose of creating this project is to learn for junior programmers how to implement a full stack application and create the best structure for the application.
-![HomePage](https://github.com/pooulad/next-golang-crud-app/blob/main/images/home.png)
+![HomePage](https://github.com/pooulad/nextjs-golang-crud-app/blob/main/images/home.png)
 
 ## Technology list in this project
 
@@ -64,9 +64,9 @@ This section tracks the progress of implemented features in the File Trove CLI t
 
 ## Screenshots
 
-![App SignUp Form](https://github.com/pooulad/next-golang-crud-app/blob/main/images/sign-up.png)
+![App SignUp Form](https://github.com/pooulad/nextjs-golang-crud-app/blob/main/images/sign-up.png)
 
-![App SignIn Form](https://github.com/pooulad/next-golang-crud-app/blob/main/images/sign-in.png)
+![App SignIn Form](https://github.com/pooulad/nextjs-golang-crud-app/blob/main/images/sign-in.png)
 
 
 
