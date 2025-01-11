@@ -16,7 +16,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "next-golang-crud-app",
+  title: "nextjs-golang-crud-app",
   description: "Created by pooulad",
 };
 
