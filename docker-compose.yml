@@ -7,6 +7,8 @@ services:
     image: ngca_client
     ports:
       - "${APP_PORT}:3000"
+    environment:
+      NEXTAUTH_URL: http://localhost:3000
   api:
     container_name: ngca_server
     build:
