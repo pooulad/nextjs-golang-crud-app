@@ -1,0 +1,40 @@
+services:
+  # ⚠️Next auth error in login api handler. so i decided to comment it for now
+  # client:
+  #   container_name: ngca_client
+  #   build:
+  #     context: ./frontend/
+  #     dockerfile: Dockerfile
+  #   image: ngca_client
+  #   ports:
+  #     - "${APP_PORT}:3000"
+  #   environment:
+  #     NEXTAUTH_URL: http://localhost:3000
+  #     AUTH_URL: http://localhost:3000
+  api:
+    container_name: ngca_server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${API_PORT}:8000
+    env_file: ".env"
+    depends_on:
+      postgres:
+        condition: service_healthy
+        restart: true
+  postgres:
+    container_name: ngca_db
+    ports:
+      - ${DB_PORT}:5432
+    image: postgres:latest
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}" ]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}
