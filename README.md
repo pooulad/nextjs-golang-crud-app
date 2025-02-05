@@ -33,7 +33,7 @@ With Docker🐳:
 
 1-Run DB and API service
 ```bash
-  docker composer up -d
+  docker compose up -d
 ```
 2- Run nextjs
 ```bash
