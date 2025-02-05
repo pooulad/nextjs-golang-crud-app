@@ -1,14 +1,15 @@
 services:
-  client:
-    container_name: ngca_client
-    build:
-      context: ./frontend/
-      dockerfile: Dockerfile
-    image: ngca_client
-    ports:
-      - "${APP_PORT}:3000"
-    environment:
-      NEXTAUTH_URL: http://localhost:3000
+  # client:
+  #   container_name: ngca_client
+  #   build:
+  #     context: ./frontend/
+  #     dockerfile: Dockerfile
+  #   image: ngca_client
+  #   ports:
+  #     - "${APP_PORT}:3000"
+  #   environment:
+  #     NEXTAUTH_URL: http://localhost:3000
+  #     AUTH_URL: http://localhost:3000
   api:
     container_name: ngca_server
     build:
