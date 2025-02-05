@@ -27,14 +27,34 @@ in front-end:
 
 ## How to run
 
-In root of source you should run your go project
+🚦I included the .env file intentionally in the project so that you can see how the services work and with what settings. Otherwise, it should not be displayed in the project.
+
+With Docker🐳:
+
+1-Run DB and API service
 ```bash
+  docker composer up -d
+```
+2- Run nextjs
+```bash
+  cd ./frontend
+  yarn install
+  yarn run dev
+```
+
+Manaul✌️:
+
+1-Create DB based on .env file(you can change it in .env file)
+
+2-In root of source you should run your go project
+```bash
+  go mod tidy
   go run main.go
 ```
-In root frontend directory you should run your next project
+3-In root frontend directory you should run your next project
 ```bash
-  npm install
-  npm run dev
+  yarn install
+  yarn run dev
 ```
 
 ## API Reference
@@ -60,7 +80,8 @@ This section tracks the progress of implemented features in project.
 
 - [x] Add swagger to project.
 - [x] Add Next-auth to project -> frontend directory.
-- [ ] Add all api response states(success,failure).
+- [x] Add all api response states(success,failure).
+- [x] Dockerize project.
 
 ## Screenshots
 

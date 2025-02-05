@@ -1,4 +1,5 @@
 services:
+  # ⚠️Next auth error in login api handler. so i decided to comment it for now
   # client:
   #   container_name: ngca_client
   #   build:
