@@ -90,5 +90,6 @@ This section tracks the progress of implemented features in project.
 ![App SignIn Form](https://github.com/pooulad/nextjs-golang-crud-app/blob/main/images/sign-in.png)
 
 
+## Star History
 
-
+[![Star History Chart](https://api.star-history.com/svg?repos=pooulad/nextjs-golang-crud-app&type=Date)](https://star-history.com/#pooulad/nextjs-golang-crud-app&Date)
