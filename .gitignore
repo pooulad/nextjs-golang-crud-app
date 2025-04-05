@@ -1,2 +1,27 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
 
-dist/
+# Output of the go coverage tool, specifically when using LiteIDE
+*.out
+
+# Dependency directories (remove the comment below if you use Go modules)
+vendor/
+
+# Go workspace file
+go.work
+go.work.sum
+
+# IDE/editor specific files
+.vscode/
+.idea/
+*.swp
+
+# Environment variable file
+.env
+
+# Ignore the tmp directory and all files inside it
+/tmp

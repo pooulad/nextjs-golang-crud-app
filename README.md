@@ -51,6 +51,17 @@ Manaul✌️:
   go mod tidy
   go run main.go
 ```
+or- live refresh with air.
+
+- install air
+```bash
+  go install github.com/air-verse/air@latest
+```
+- then run:
+```bash
+  air
+```
+
 3-In root frontend directory you should run your next project
 ```bash
   yarn install

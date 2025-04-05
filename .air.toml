@@ -1,0 +1,15 @@
+root = "."
+tmp_dir = "bin"
+
+[build]
+  bin = "bin/main"
+  cmd = ""  # Prevent building, just restart the server
+  log = "debug"
+  include = ["*.go"]
+  exclude = ["tmp", "vendor"]
+
+[color]
+  main = "yellow"
+  watcher = "cyan"
+  build = "green"
+  log = "white"
