@@ -17,7 +17,7 @@
     "eslint": "8.46.0",
     "eslint-config-next": "^15.0.4",
     "next": "^15.4.10",
-    "next-auth": "^4.24.11",
+    "next-auth": "^4.24.12",
     "postcss": "8.4.31",
     "react": "^19.0.0",
     "react-bootstrap": "^2.9.1",
